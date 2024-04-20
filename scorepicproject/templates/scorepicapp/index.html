@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/indexx.css' %}" />
+    <title>ScorePic</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="animation">
+        <div class="main-page">
+          <div class="main-content">
+            <div class="top">
+              <div class="navbar">
+                <div class="logo">
+                  <p>ScorePic</p>
+                </div>
+                <div class="menu">
+                  <i class="fa-sharp fa-solid fa-upload" id="upload"></i>
+                </div>
+              </div>
+            </div>
+            <div class="middle">
+              <div class="top-1">
+                <div class="image-box">
+                  <div class="image image1">
+                    <img
+                      src="{{data1.image.url}}"
+                      alt="image"
+                      onclick="countVotes(`{{data1.id}}`)"
+                    />
+                  </div>
+                  <div class="voting votes1">
+                    <p>{{data1_votes}} %</p>
+                  </div>
+                </div>
+              </div>
+              <div class="middle-1">
+                <p>
+                  > > > >
+                  <span id="next"><a href="{% url 'mainpage' %}">Next</a></span>
+                  > > > >
+                </p>
+              </div>
+              <div class="bottom-1">
+                <div class="image-box">
+                  <div class="image image2">
+                    <img
+                      src="{{data2.image.url}}"
+                      alt="image"
+                      onclick="countVotes(`{{data2.id}}`)"
+                    />
+                  </div>
+                  <div class="voting votes2">
+                    <p>{{data2_votes}} %</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bottom">
+              <div class="footer">
+                <p>©️ Rights Reserved for ScorePic</p>
+              </div>
+            </div>
+          </div>
+          <div class="upload-content">
+            <div class="upload-div">
+              <div class="close-div">
+                <i class="fa-solid fa-xmark" id="close"></i>
+              </div>
+              <div class="form-div">
+                <form action="" method="POST" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    placeholder="Image"
+                    required
+                    multiple
+                  />
+                  <button type="submit">Upload</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="{% static 'js/index.js' %}"></script>
+    <script type="text/javascript">
+      function countVotes(data) {
+        url = '{% url "count" 0 %}'.replace("0", data);
+        $.ajax({
+          type: "GET",
+          url: url,
+        });
+      }
+    </script>
+  </body>
+</html>
